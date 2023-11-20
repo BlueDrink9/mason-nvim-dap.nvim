@@ -62,7 +62,12 @@ M.python = {
 		request = 'launch',
 		name = 'Python: Launch file',
 		program = '${file}', -- This configuration will launch the current file if used.
-		pythonPath = venv_path and (venv_path .. '/bin/python') or nil,
+		pythonPath = venv_path and (
+            -- venv on Windows uses Scripts instead of bin
+            (vim.fn.has("win32") ==1 and
+            venv_path .. '/Scripts/python') or
+            venv_path .. '/bin/python'
+            ) or nil,
 	},
 }
 
